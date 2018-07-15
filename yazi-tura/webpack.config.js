@@ -1,13 +1,14 @@
 const path = require('path');
-
-
+const fs = require('fs');
+const lessToJs = require('less-vars-to-js');
+const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, 'ant-theme-vars.less'), 'utf8'));
 
 
 
 module.exports = {
 
 
-  
+
   mode: 'development',
 
 
@@ -28,9 +29,27 @@ module.exports = {
       include: path.join(__dirname, '/client/src'),
       loader: 'babel-loader',
       query: {
-        presets: ["react", "es2015"]
+        presets: ["react", "es2015"],
       }
-    }],
+    },
+
+
+    {
+      test: /\.less$/,
+      use: [
+        { loader: "style-loader" },
+        { loader: "css-loader" },
+        {
+          loader: "less-loader",
+          options: {
+            modifyVars: themeVariables
+          }
+        }
+      ]
+    }
+
+
+    ],
   },
 
   // start Webpack in a watch mode, so Webpack will rebuild the bundle on changes
