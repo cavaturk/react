@@ -8,6 +8,11 @@ import { Card, Input} from 'antd';
 import { Button } from 'antd';
 
 
+import 'antd/dist/antd.css';
+
+
+
+
 const SignUpForm = ({
   onSubmit,
   onChange,
